@@ -1,0 +1,3 @@
+// Constants
+PLAYERCOLOR = "#00FF88"
+ENEMYCOLOR = "#FF8844"
