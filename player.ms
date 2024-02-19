@@ -1,6 +1,8 @@
 import "importUtil"
 ensureImport "resources"
 ensureImport "constants"
+ensureImport "spriteExtensions"
+ensureImport "grid"
 
 // Player class
 
@@ -35,15 +37,22 @@ end function
 
 player.checkCollisions = function
 	for sp in spriteDisp.sprites
-		if sp != self and self.overlaps(sp) and self.isFacing(sp) then
+		if sp != self and sp.localBounds != null and
+		  self.overlaps(sp) and self.isFacing(sp) then
 			self.hit sp
 		end if
 	end for
+	if grid.overlapsWall(self) then self.hitWall
 end function
 
 player.hit = function(other)
 	self.speed = 0
 	if other isa Enemy then other.takeDamage 1
+end function
+
+player.hitWall = function
+	self.speed = 0
+	self.moveForward -3
 end function
 
 setup = function

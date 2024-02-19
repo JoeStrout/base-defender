@@ -23,4 +23,13 @@ So, we're off to a good start.  The next two obvious big steps are:
 
 I'll have to decide whether to use a hex grid or a square grid.  I do loves me some hex grids, but there's no doubt they are more complex, and I don't have a strong reason to favor them in this game.  Except they're cool.  Still on the fence about this.  Perhaps I can start with a square grid, but hide all the details in a `map` module, and try to be disciplined about going through the proper module APIs rather than accessing the tile display directly.  Then I can take an hour sometime later and replace the square grid with a hex one.
 
+## 18 Feb 2024
+
+We've got turrets working now, firing projectiles automatically at the enemy.  We have one of these hard-coded out on the map, and four little turrets on the castle.  So that's all working swimmingly.
+
+Then, I added a `grid` module that manages a TileDisplay, as well as a 2D list that tracks distance to the goal (castle).  The distance is also shown as cell tint, for debugging purposes.  The enemies consider 8 directions around their location, and turn to face the one that's closest to the goal according to this distance map.
+
+This works pretty well, except that sometimes they get caught on a corner of a wall.  I think the simple solution to that will be: when their current speed is below some threshold (as it will be, when they've hit a wall), only consider the 4 orthogonal directions, ignoring diagonals.  That should work to get them unstuck.
+
+After that, I guess we're ready to start trying to make the game fun, by having a cycle of attacks and building.  We'll need UI for selecting whether to build a tower, or upgrade the castle, or upgrade the player avatar.
 
