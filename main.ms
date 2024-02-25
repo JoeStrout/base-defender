@@ -1,5 +1,6 @@
 import "importUtil"
 ensureImport "mathUtil"
+ensureImport "mapUtil"
 ensureImport "qa"
 ensureImport "enemies"
 ensureImport "resources"
@@ -27,6 +28,8 @@ moveTowardsAngle = function(fromAng, toAng, maxChange)
 end function
 
 drawBackground = function
+	display(6).mode = displayMode.pixel
+	gfx = display(6)
 	gfx.clear "#000045FF"
 	gfx.color = "#004671FF"
 	for x in range(0, 960, 64)
@@ -42,7 +45,7 @@ grid.setup
 grid.prepareDistanceMap castle
 player.setup
 enemies.setup
-t = (new Tower).init(300, 300)
+//t = (new Tower).init(300, 300)
 
 while true
 	for sp in spriteDisp.sprites
@@ -50,6 +53,5 @@ while true
 		sp.updateFlash
 	end for
 	enemies.update
-	text.row = 25; print grid.distanceToGoal(mouse.x, mouse.y) + "    "
 	yield
 end while

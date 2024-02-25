@@ -58,7 +58,7 @@ setup = function
 	td.cellSize = 32
 	td.tileSet = file.loadImage("/sys/pics/TileShapes.png")
 	td.tileSetTileSize = 64
-	td.clear 0
+	td.clear null
 	outer.columns = range(0, td.extent[0]-1)
 	outer.rows = range(0, td.extent[1]-1)
 	for x in columns
@@ -79,7 +79,9 @@ overlapsWall = function(spriteOrPoint)
 		// Harder case: check a bounding box
 		bb = spriteOrPoint.worldBounds
 		for c in range(col-1, col+1)
+			if c < 0 or c >= COLUMNS then continue
 			for r in range(row-1, row+1)
+				if r < 0 or r >= ROWS then continue
 				wallBB = cellBounds[c][r]
 				if wallBB and wallBB.overlaps(bb) then return true
 			end for
@@ -93,7 +95,7 @@ end function
 
 setDistance = function(col, row, dist)
 	distMap[col][row] = dist
-	td.setCellTint col, row, rgb(255 - dist * 8, 0, 0)
+	// td.setCellTint col, row, rgb(255 - dist * 8, 0, 0)
 end function
 
 prepareDistanceMap = function(goalPos)

@@ -33,3 +33,12 @@ This works pretty well, except that sometimes they get caught on a corner of a w
 
 After that, I guess we're ready to start trying to make the game fun, by having a cycle of attacks and building.  We'll need UI for selecting whether to build a tower, or upgrade the castle, or upgrade the player avatar.
 
+## 25 Feb 2024
+
+Well THAT was interesting.  I thought the trick of ignoring diagonals when stuck would solve the problem of enemies getting stuck on corners.  It *mostly* does, but not always; if an enemy approaches a corner from an orthogonal direction, but slightly higher than the edge of the corner, it can still get stuck.
+
+Trying to solve that led down a rabbit hole, where I tried to keep track of which direction(s) is/are "blocked" and so try something else.  I first implemented this incorrectly (using the last dx,dy instead of the chosen dx,dy), but even after that was fixed, it doesn't work.  And the reason appears to be: in order to go in the proper direction, the enemy first has to rotate to face that direction.  And rotating causes its bounding box to clip into the neighboring wall, so it figures *that* direction is blocked, too.
+
+In fact if I have it really remember and discard every direction it thinks is blocked, then it quickly concludes it that it's completely trapped (and commits hari-kari).
+
+At the moment, I'm not sure what the right solution for this is.

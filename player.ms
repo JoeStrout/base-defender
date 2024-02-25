@@ -55,6 +55,10 @@ player.hitWall = function
 	self.moveForward -3
 end function
 
+player.takeDamage = function
+	self.flash
+end function
+
 setup = function
 	spriteDisp.sprites.push player	
 end function
